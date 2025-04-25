@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speech Analysis Results</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Speech Analysis Results</h1>
+  <div id="speechFeedback"></div>
+
+  <script src="scripts.js"></script>
+  <script>
+    // Retrieve the speech result from localStorage
+    const speechResult = JSON.parse(localStorage.getItem('speechResult'));
+
+    if (speechResult) {
+      document.getElementById("speechFeedback").innerHTML = `
+        <strong>Score: ${speechResult.score}%</strong><br>
+        <strong>You said:</strong> "${speechResult.transcript}"<br><br>
+        ${speechResult.transcript.split(/\s+/).length < 20 ? 
+          "<span class='negative'>Too short. Aim for 30+ words.</span>" : 
+          "<span class='positive'>Good response length.</span>"}
+      `;
+    } else {
+      document.getElementById("speechFeedback").innerHTML = "<span class='negative'>No speech data available.</span>";
+    }
+  </script>
+</body>
+</html>

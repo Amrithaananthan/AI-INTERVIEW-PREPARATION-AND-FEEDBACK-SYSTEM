@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interview Prep Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reset and global styles */
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #f72585;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+      --success: #4cc9f0;
+      --warning: #f8961e;
+      --danger: #f94144;
+    }
+    
+    body {
+      font-family: 'Segoe UI', 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafc;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header styles */
+    header {
+      background: var(--gradient);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: var(--accent);
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Hero section */
+    .hero {
+      text-align: center;
+      padding: 100px 15px;
+      background: var(--gradient);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 3.2rem;
+      margin-bottom: 15px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .hero button {
+      background: var(--accent);
+      color: #fff;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(247, 37, 133, 0.4);
+    }
+
+    .hero button:hover {
+      background: #e5177e;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(247, 37, 133, 0.6);
+    }
+
+    /* Main content styles */
+    .container {
+      padding: 50px 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-bottom: 50px;
+      padding: 30px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section p {
+      font-size: 1.1rem;
+      color: #555;
+      max-width: 800px;
+    }
+
+    .cards {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      width: 300px;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0, 1);
+      cursor: pointer;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--dark);
+    }
+
+    .card p {
+      font-size: 1rem;
+      color: #666;
+      margin: 0 auto;
+    }
+
+    /* Analysis Results Section */
+    .results-container {
+      margin-top: 40px;
+      padding: 25px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .results-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .overall-score-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .radial-progress {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radial-progress::before {
+      content: '';
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .radial-progress .progress-bar {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(var(--primary) 0%, var(--primary) 0%, #eee 0%);
+      transition: background 1s ease;
+    }
+
+    .radial-progress .progress-text {
+      position: relative;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .overall-score-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .metric-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--primary);
+    }
+
+    .metric-title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .metric-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .metric-description {
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    .progress-container {
+      height: 8px;
+      background: #eee;
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-linear {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    /* Interview Performance Dashboard Styles */
+    .performance-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .performance-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .performance-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .performance-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .performance-card h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .radial-score {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 30px;
+    }
+
+    .radial-progress-large {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(var(--primary) 0%, var(--primary) 252deg, #eee 252deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .radial-inner {
+      width: 70%;
+      height: 70%;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .score-label {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: -20px;
+      margin-bottom: 20px;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .metric-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .metric-value-dashboard {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: #666;
+      text-align: center;
+    }
+
+    .bar-chart {
+      margin-top: 30px;
+    }
+
+    .bar-item {
+      margin-bottom: 15px;
+    }
+
+    .bar-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .bar-container {
+      height: 10px;
+      background: #eee;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 5px;
+      width: 70%;
+    }
+
+    .feedback-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      margin-top: 30px;
+    }
+
+    .feedback-card h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .feedback-content {
+      background: #e7f5ff;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    /* Score colors */
+    .score-excellent {
+      color: var(--success);
+    }
+    
+    .score-good {
+      color: var(--primary);
+    }
+    
+    .score-fair {
+      color: var(--warning);
+    }
+    
+    .score-poor {
+      color: var(--danger);
+    }
+
+    /* Tips section */
+    .tips-section {
+      margin-top: 30px;
+      padding: 20px;
+      background: #e7f5ff;
+      border-radius: 10px;
+    }
+
+    .tips-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .tips-list {
+      padding-left: 20px;
+    }
+
+    .tips-list li {
+      margin-bottom: 10px;
+    }
+
+    /* Footer styles */
+    footer {
+      padding: 40px 20px;
+      text-align: center;
+      background: var(--dark);
+      color: #fff;
+      font-size: 1rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .social-links a {
+      color: #fff;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    /* Demo controls */
+    .demo-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .demo-controls h3 {
+      margin-top: 0;
+    }
+
+    .demo-controls button {
+      display: block;
+      width: 100%;
+      margin-bottom: 5px;
+      padding: 5px;
+      border: none;
+      border-radius: 4px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+    }
+
+    .demo-controls button.reset {
+      background: var(--danger);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px;
+      }
+      
+      nav {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .hero p {
+        font-size: 1.1rem;
+      }
+      
+      .section {
+        padding: 25px;
+      }
+      
+      .cards {
+        gap: 20px;
+      }
+      
+      .card {
+        width: 100%;
+        max-width: 350px;
+      }
+      
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .overall-score-container {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+      }
+
+      .demo-controls {
+        bottom: 10px;
+        right: 10px;
+        left: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-comments"></i>
+      Interview Prep Hub
+    </div>
+    <nav>
+      <a href="#technical-tips">Technical Tips</a>
+      <a href="#hr-tips">HR Tips</a>
+      <a href="#behavioral-tips">Behavioral Tips</a>
+      <a href="#dashboard">Dashboard</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <h1>Land Your Dream Job With Confidence</h1>
+      <p>Master interview techniques with our AI-powered preparation platform and stand out from the competition.</p>
+      <button onclick="scrollToSection('dashboard')">Get Started</button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Technical Tips Section -->
+    <div class="section" id="technical-tips">
+      <h2><i class="fas fa-laptop-code"></i> Technical Tips</h2>
+      <p>Master the technical skills you need to succeed. Our tailored tips will help you shine in technical interviews with coding challenges, system design concepts, and problem-solving strategies.</p>
+    </div>
+
+    <!-- HR Tips Section -->
+    <div class="section" id="hr-tips">
+      <h2><i class="fas fa-user-tie"></i> HR Tips</h2>
+      <p>Learn how to present yourself to HR professionals. From crafting a strong resume to acing behavioral questions, we'll help you make a great first impression.</p>
+    </div>
+
+    <!-- Behavioral Tips Section -->
+    <div class="section" id="behavioral-tips">
+      <h2><i class="fas fa-brain"></i> Behavioral Tips</h2>
+      <p>Impress interviewers with your problem-solving skills, teamwork examples, and leadership stories. Learn how to structure compelling answers using proven frameworks.</p>
+    </div>
+
+    <!-- Dashboard Section -->
+    <div class="section" id="dashboard">
+      <h2><i class="fas fa-chart-line"></i> Performance Dashboard</h2>
+      <p>Track your progress and identify areas to improve with our comprehensive analytics dashboard.</p>
+      <div class="cards">
+        <a href="speech.html" class="card">
+          <div class="card-icon">
+            <i class="fas fa-comment-dots"></i>
+          </div>
+          <h3>Speech Clarity</h3>
+          <p>Analyze your speech patterns for clarity, pace, and confidence to make your communication more effective.</p>
+        </a>
+        <a href="gesture.html" class="card">
+          <div class="card-icon">
+            <i class="fas fa-hands"></i>
+          </div>
+          <h3>Gestures</h3>
+          <p>Evaluate your body language and non-verbal communication to project confidence and professionalism.</p>
+        </a>
+          <a href="response.html" class="card">
+          <div class="card-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3>Response Quality</h3>
+          <p>Improve your answers using the STAR method and other proven frameworks for impactful responses.</p>
+        </a>
+      </div>
+
+      <!-- Results Analysis Section -->
+      <div class="results-container" id="results-analysis">
+        <div class="results-header">
+          <div class="results-title">Your Overall Performance</div>
+          <div class="overall-score-container">
+            <div class="radial-progress" id="radial-progress">
+              <div class="progress-bar"></div>
+              <div class="progress-text" id="radial-score">0</div>
+            </div>
+            <div class="overall-score-text" id="overall-score-text">/ 100</div>
+          </div>
+        </div>
+        
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div class="metric-title">Speech Clarity</div>
+            <div class="metric-value" id="speech-score">- / 100</div>
+            <div class="progress-container">
+              <div class="progress-bar-linear" id="speech-progress" style="width: 0%"></div>
+            </div>
+            <div class="metric-description">Based on clarity, filler words, and confidence</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">Body Language</div>
+            <div class="metric-value" id="gesture-score">- / 100</div>
+            <div class="progress-container">
+              <div class="progress-bar-linear" id="gesture-progress" style="width: 0%"></div>
+            </div>
+            <div class="metric-description">Based on eye contact, posture, and gestures</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">Response Quality</div>
+            <div class="metric-value" id="response-score">- / 100</div>
+            <div class="progress-container">
+              <div class="progress-bar-linear" id="response-progress" style="width: 0%"></div>
+            </div>
+            <div class="metric-description">Based on STAR method and content relevance</div>
+          </div>
+        </div>
+        
+        <div class="tips-section">
+          <div class="tips-title">Personalized Improvement Tips</div>
+          <ul class="tips-list" id="improvement-tips">
+            <li>Complete your speech and gesture analysis to get personalized feedback</li>
+            <li>Practice answering common interview questions using the STAR method</li>
+            <li>Record yourself to review your body language and speech patterns</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Interview Performance Dashboard Section -->
+      <div class="performance-container">
+        <div class="performance-card">
+          <h2><i class="fas fa-comment-dots"></i> Speech Analysis</h2>
+          <div class="radial-score">
+            <div class="radial-progress-large" id="speech-radial">
+              <div class="radial-inner" id="speech-score-value">-</div>
+            </div>
+          </div>
+          <div class="score-label">Overall Speech Score</div>
+          
+          <div class="metrics-grid">
+            <div class="metric-item">
+              <div class="metric-value-dashboard" id="clarity-score">-</div>
+              <div class="metric-label">Clarity</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value-dashboard" id="pace-score">-</div>
+              <div class="metric-label">Pace</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value-dashboard" id="confidence-score">-</div>
+              <div class="metric-label">Confidence</div>
+            </div>
+            <div class="metric-item">
+              <div class="metric-value-dashboard" id="fluency-score">-</div>
+              <div class="metric-label">Fluency</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="performance-card">
+          <h2><i class="fas fa-hands"></i> Gesture Analysis</h2>
+          <div class="radial-score">
+            <div class="radial-progress-large" id="gesture-radial">
+              <div class="radial-inner" id="gesture-score-value">-</div>
+            </div>
+          </div>
+          <div class="score-label">Overall Gesture Score</div>
+          
+          <div class="bar-chart">
+            <div class="bar-item">
+              <div class="bar-label">
+                <span>Eye Contact</span>
+                <span id="eye-contact-value">-</span>
+              </div>
+              <div class="bar-container">
+                <div class="bar-fill" id="eye-contact-bar" style="width: 0%"></div>
+              </div>
+            </div>
+            
+            <div class="bar-item">
+              <div class="bar-label">
+                <span>Posture</span>
+                <span id="posture-value">-</span>
+              </div>
+              <div class="bar-container">
+                <div class="bar-fill" id="posture-bar" style="width: 0%"></div>
+              </div>
+            </div>
+            
+            <div class="bar-item">
+              <div class="bar-label">
+                <span>Hand Gestures</span>
+                <span id="gestures-value">-</span>
+              </div>
+              <div class="bar-container">
+                <div class="bar-fill" id="gestures-bar" style="width: 0%"></div>
+              </div>
+            </div>
+            
+            <div class="bar-item">
+              <div class="bar-label">
+                <span>Facial Expressions</span>
+                <span id="expressions-value">-</span>
+              </div>
+              <div class="bar-container">
+                <div class="bar-fill" id="expressions-bar" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feedback-card">
+        <h2><i class="fas fa-star"></i> Overall Performance</h2>
+        <div class="radial-score" style="width: 150px; height: 150px; margin: 20px auto;">
+          <div class="radial-progress-large" id="overall-radial">
+            <div class="radial-inner" id="overall-score-value">-</div>
+          </div>
+        </div>
+        <div class="feedback-content" id="feedback-content">
+          <p style="text-align: center; font-weight: 600; margin-bottom: 15px;">Complete your assessments to get personalized feedback</p>
+          <ul id="feedback-list">
+            <li>Your speech analysis will appear here after completion</li>
+            <li>Your gesture analysis will appear here after completion</li>
+            <li>Your response quality analysis will appear here after completion</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-linkedin"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    © 2025 Interview Prep Hub. All rights reserved.
+    <p style="margin-top: 10px; opacity: 0.8;">Helping candidates shine in their interviews since 2023</p>
+  </footer>
+
+  <!-- Demo Controls (Remove in production) -->
+  <div class="demo-controls">
+    <h3>Demo Controls</h3>
+    <button onclick="runSpeechDemo()">Simulate Speech Test</button>
+    <button onclick="runGestureDemo()">Simulate Gesture Test</button>
+    <button onclick="runResponseDemo()">Simulate Response Test</button>
+    <button class="reset" onclick="resetDemo()">Reset All Scores</button>
+  </div>
+
+  <script>
+    // Global object to store user scores
+    const userScores = {
+      speech: null,
+      gestures: null,
+      response: null,
+      speechDetails: null,
+      gestureDetails: null
+    };
+
+    // Initialize the page when loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load any saved scores from previous sessions
+      loadSavedScores();
+      
+      // Set up navigation
+      setupNavigation();
+    });
+
+    // Load scores from session storage
+    function loadSavedScores() {
+      try {
+        const savedScores = JSON.parse(sessionStorage.getItem('interviewScores'));
+        if (savedScores) {
+          Object.assign(userScores, savedScores);
+          updateDashboard();
+        }
+      } catch (error) {
+        console.error('Error loading saved scores:', error);
+      }
+    }
+
+    // Set up navigation event listeners
+    function setupNavigation() {
+      document.querySelectorAll('nav a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const sectionId = this.getAttribute('href').substring(1);
+          scrollToSection(sectionId);
+        });
+      });
+      
+      // Smooth scrolling for the Get Started button
+      document.querySelector('.hero button').addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToSection('dashboard');
+      });
+    }
+
+    // Smooth scrolling to sections
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Update scores from assessment results
+    function updateScores(type, score, details = null) {
+      switch(type) {
+        case 'speech':
+          userScores.speech = score;
+          userScores.speechDetails = details;
+          break;
+        case 'gesture':
+          userScores.gestures = score;
+          userScores.gestureDetails = details;
+          break;
+        case 'response':
+          userScores.response = score;
+          break;
+      }
+      
+      // Save to session storage
+      sessionStorage.setItem('interviewScores', JSON.stringify(userScores));
+      
+      // Update the UI
+      updateDashboard();
+    }
+
+    // Main function to update the dashboard with current scores
+    function updateDashboard() {
+      // Update speech score if available
+      if (userScores.speech !== null) {
+        updateScoreDisplay('speech', userScores.speech);
+        
+        // Update speech details if available
+        if (userScores.speechDetails) {
+          updateSpeechDetails(userScores.speechDetails);
+        }
+      }
+      
+      // Update gesture score if available
+      if (userScores.gestures !== null) {
+        updateScoreDisplay('gesture', userScores.gestures);
+        
+        // Update gesture details if available
+        if (userScores.gestureDetails) {
+          updateGestureDetails(userScores.gestureDetails);
+        }
+      }
+      
+      // Update response score if available
+      if (userScores.response !== null) {
+        updateScoreDisplay('response', userScores.response);
+      }
+      
+      // Calculate and update overall score
+      updateOverallScore();
+      
+      // Update feedback content
+      updateFeedbackContent();
+    }
+
+    // Update a specific score display
+    function updateScoreDisplay(type, score) {
+      const elementMap = {
+        speech: {
+          value: 'speech-score-value',
+          score: 'speech-score',
+          progress: 'speech-progress',
+          radial: 'speech-radial'
+        },
+        gesture: {
+          value: 'gesture-score-value',
+          score: 'gesture-score',
+          progress: 'gesture-progress',
+          radial: 'gesture-radial'
+        },
+        response: {
+          score: 'response-score',
+          progress: 'response-progress'
+        }
+      };
+      
+      const elements = elementMap[type];
+      
+      if (elements.value) {
+        document.getElementById(elements.value).textContent = score;
+        updateScoreColor(elements.value, score);
+      }
+      if (elements.score) {
+        document.getElementById(elements.score).textContent = `${score} / 100`;
+        updateScoreColor(elements.score, score);
+      }
+      if (elements.progress) {
+        document.getElementById(elements.progress).style.width = `${score}%`;
+      }
+      if (elements.radial) {
+        updateRadialProgressLarge(elements.radial, score);
+      }
+    }
+
+    // Update speech details display
+    function updateSpeechDetails(details) {
+      const detailElements = {
+        clarity: 'clarity-score',
+        pace: 'pace-score',
+        confidence: 'confidence-score',
+        fluency: 'fluency-score'
+      };
+      
+      for (const [metric, elementId] of Object.entries(detailElements)) {
+        document.getElementById(elementId).textContent = details[metric];
+        updateScoreColor(elementId, details[metric]);
+      }
+    }
+
+    // Update gesture details display
+    function updateGestureDetails(details) {
+      const detailElements = {
+        eyeContact: {
+          value: 'eye-contact-value',
+          bar: 'eye-contact-bar'
+        },
+        posture: {
+          value: 'posture-value',
+          bar: 'posture-bar'
+        },
+        handGestures: {
+          value: 'gestures-value',
+          bar: 'gestures-bar'
+        },
+        facialExpressions: {
+          value: 'expressions-value',
+          bar: 'expressions-bar'
+        }
+      };
+      
+      for (const [metric, elements] of Object.entries(detailElements)) {
+        document.getElementById(elements.value).textContent = `${details[metric]}%`;
+        document.getElementById(elements.bar).style.width = `${details[metric]}%`;
+      }
+    }
+
+    // Calculate and update overall score
+    function updateOverallScore() {
+      const scores = [];
+      if (userScores.speech !== null) scores.push(userScores.speech);
+      if (userScores.gestures !== null) scores.push(userScores.gestures);
+      if (userScores.response !== null) scores.push(userScores.response);
+      
+      if (scores.length > 0) {
+        const overallScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+        
+        // Update radial progress visualization
+        updateRadialProgress(overallScore);
+        document.getElementById('overall-score-value').textContent = overallScore;
+        document.getElementById('radial-score').textContent = overallScore;
+        updateScoreColor('radial-score', overallScore);
+        updateScoreColor('overall-score-value', overallScore);
+        updateRadialProgressLarge('overall-radial', overallScore);
+      }
+    }
+
+    // Update radial progress (small widget)
+    function updateRadialProgress(score) {
+      const radialProgress = document.querySelector('#radial-progress .progress-bar');
+      const radialScore = document.getElementById('radial-score');
+      
+      // Calculate the percentage for the conic gradient
+      const percentage = (score / 100) * 360;
+      radialProgress.style.background = `conic-gradient(var(--primary) 0%, var(--primary) ${percentage}deg, #eee ${percentage}deg)`;
+      
+      // Animate the score number
+      let current = 0;
+      const increment = score / 50; // Adjust speed of animation
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= score) {
+          current = score;
+          clearInterval(timer);
+        }
+        radialScore.textContent = Math.round(current);
+        updateScoreColor('radial-score', current);
+      }, 20);
+    }
+    
+    // Update large radial progress charts
+    function updateRadialProgressLarge(elementId, score) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      const degrees = (score / 100) * 360;
+      element.style.background = `conic-gradient(var(--primary) 0%, var(--primary) ${degrees}deg, #eee ${degrees}deg)`;
+    }
+    
+    // Update score color based on value
+    function updateScoreColor(elementId, value) {
+      const element = document.getElementById(elementId);
+      
+      if (!element) return;
+      
+      // Remove all score classes first
+      element.classList.remove('score-excellent', 'score-good', 'score-fair', 'score-poor');
+      
+      if (value >= 80) {
+        element.classList.add('score-excellent');
+      } else if (value >= 60) {
+        element.classList.add('score-good');
+      } else if (value >= 40) {
+        element.classList.add('score-fair');
+      } else {
+        element.classList.add('score-poor');
+      }
+    }
+    
+    // Update feedback content based on scores
+    function updateFeedbackContent() {
+      const feedbackContent = document.getElementById('feedback-content');
+      const feedbackList = document.getElementById('feedback-list');
+      
+      if (!feedbackContent || !feedbackList) return;
+      
+      // Clear existing content
+      feedbackList.innerHTML = '';
+      
+      // Calculate overall score if we have any scores
+      let overallScore = null;
+      const scores = [];
+      if (userScores.speech !== null) scores.push(userScores.speech);
+      if (userScores.gestures !== null) scores.push(userScores.gestures);
+      if (userScores.response !== null) scores.push(userScores.response);
+      
+      if (scores.length > 0) {
+        overallScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+      }
+      
+      // Determine overall feedback
+      let overallFeedback = '';
+      if (overallScore === null) {
+        overallFeedback = 'Complete your assessments to get personalized feedback';
+      } else if (overallScore >= 80) {
+        overallFeedback = 'Excellent performance! You\'re interview-ready.';
+      } else if (overallScore >= 60) {
+        overallFeedback = 'Good job! With some refinement, you\'ll be interview-ready.';
+      } else if (overallScore >= 40) {
+        overallFeedback = 'Fair performance. Focus on the areas below to improve.';
+      } else {
+        overallFeedback = 'Needs improvement. Review the areas below and practice more.';
+      }
+      
+      // Update the feedback header
+      feedbackContent.querySelector('p').textContent = overallFeedback;
+      
+      // Add specific feedback based on available scores
+      if (userScores.speech !== null) {
+        if (userScores.speech < 70) {
+          feedbackList.innerHTML += `
+            <li>Your speech clarity (${userScores.speech}/100) could improve. Try reducing filler words and practicing clear articulation.</li>
+          `;
+          
+          if (userScores.speechDetails?.confidence < 60) {
+            feedbackList.innerHTML += `
+              <li>Your confidence score is low (${userScores.speechDetails.confidence}/100). Practice power poses before interviews to boost confidence.</li>
+            `;
+          }
+        } else {
+          feedbackList.innerHTML += `
+            <li>Great job on speech clarity (${userScores.speech}/100)! Maintain this strength.</li>
+          `;
+        }
+      }
+      
+      if (userScores.gestures !== null) {
+        if (userScores.gestures < 70) {
+          feedbackList.innerHTML += `
+            <li>Your body language (${userScores.gestures}/100) needs work. Focus on maintaining eye contact and using purposeful hand gestures.</li>
+          `;
+          
+          if (userScores.gestureDetails?.facialExpressions < 50) {
+            feedbackList.innerHTML += `
+              <li>Your facial expressions score is low (${userScores.gestureDetails.facialExpressions}/100). Try to smile naturally and show engagement.</li>
+            `;
+          }
+        } else {
+          feedbackList.innerHTML += `
+            <li>Excellent body language (${userScores.gestures}/100)! Your non-verbal communication is strong.</li>
+          `;
+        }
+      }
+      
+      if (userScores.response !== null) {
+        if (userScores.response < 70) {
+          feedbackList.innerHTML += `
+            <li>Your response quality (${userScores.response}/100) could improve. Practice using the STAR method for structured answers.</li>
+          `;
+        } else {
+          feedbackList.innerHTML += `
+            <li>Great response quality (${userScores.response}/100)! Your answers are well-structured and relevant.</li>
+          `;
+        }
+      }
+      
+      // If no scores are available yet
+      if (userScores.speech === null && userScores.gestures === null && userScores.response === null) {
+        feedbackList.innerHTML = `
+          <li>Complete your speech and gesture analysis to get personalized feedback</li>
+          <li>Practice answering common interview questions using the STAR method</li>
+          <li>Record yourself to review your body language and speech patterns</li>
+        `;
+      }
+    }
+
+    /* DEMO FUNCTIONS - REMOVE IN PRODUCTION */
+    function runSpeechDemo() {
+      const score = Math.floor(Math.random() * 30) + 60; // Random score between 60-90
+      const details = {
+        clarity: Math.floor(Math.random() * 30) + 60,
+        pace: Math.floor(Math.random() * 30) + 60,
+        confidence: Math.floor(Math.random() * 30) + 60,
+        fluency: Math.floor(Math.random() * 30) + 60
+      };
+      updateScores('speech', score, details);
+      alert(`Speech analysis completed! Score: ${score}`);
+    }
+
+    function runGestureDemo() {
+      const score = Math.floor(Math.random() * 30) + 60; // Random score between 60-90
+      const details = {
+        eyeContact: Math.floor(Math.random() * 30) + 60,
+        posture: Math.floor(Math.random() * 30) + 60,
+        handGestures: Math.floor(Math.random() * 30) + 60,
+        facialExpressions: Math.floor(Math.random() * 30) + 60
+      };
+      updateScores('gesture', score, details);
+      alert(`Gesture analysis completed! Score: ${score}`);
+    }
+
+    function runResponseDemo() {
+      const score = Math.floor(Math.random() * 30) + 60; // Random score between 60-90
+      updateScores('response', score);
+      alert(`Response analysis completed! Score: ${score}`);
+    }
+
+    function resetDemo() {
+      // Clear all scores
+      Object.keys(userScores).forEach(key => {
+        userScores[key] = null;
+      });
+      sessionStorage.removeItem('interviewScores');
+      updateDashboard();
+      alert('All scores have been reset');
+    }
+  </script>
+</body>
+</html>

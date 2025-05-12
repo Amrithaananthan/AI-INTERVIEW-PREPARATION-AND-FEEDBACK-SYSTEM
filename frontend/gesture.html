@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gesture Analysis | Interview Prep Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #f72585;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+      --success: #4cc9f0;
+      --warning: #f8961e;
+      --danger: #f94144;
+    }
+    
+    body {
+      font-family: 'Segoe UI', 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafc;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background: var(--gradient);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: var(--accent);
+    }
+
+    nav a {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .container {
+      padding: 50px 5%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .section:hover {
+      transform: translateY(-5px);
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--primary);
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-right: 10px;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    button:hover {
+      background-color: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .progress-container {
+      width: 100%;
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      margin: 20px 0;
+      height: 10px;
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: 8px;
+      transition: width 0.3s;
+      background: var(--gradient);
+      width: 0%;
+    }
+
+    .metric-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .metric-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+      transition: transform 0.3s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+
+    .visualization {
+      width: 100%;
+      height: 500px;
+      background: #f0f0f0;
+      border-radius: 12px;
+      margin-top: 30px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .face-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 120px;
+      border: 2px dashed var(--primary);
+      border-radius: 50% 50% 40% 40%;
+      z-index: 1;
+      opacity: 0.7;
+    }
+
+    .eye {
+      position: absolute;
+      width: 15px;
+      height: 15px;
+      background: var(--primary);
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .eye.left {
+      top: 40px;
+      left: 25px;
+    }
+
+    .eye.right {
+      top: 40px;
+      right: 25px;
+    }
+
+    .confidence-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-left: 8px;
+    }
+
+    .alert {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .tips {
+      background: #e7f5ff;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 30px;
+    }
+
+    .loading {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 20px 0;
+      font-size: 1.1rem;
+    }
+
+    .spinner {
+      border: 3px solid rgba(0, 0, 0, 0.1);
+      border-radius: 50%;
+      border-top: 3px solid var(--primary);
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hand-movement {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(67, 97, 238, 0.5);
+      border-radius: 50%;
+      z-index: 3;
+    }
+
+    #cameraFeed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .success-message {
+      padding: 15px 20px;
+      background-color: #d4edda;
+      color: #155724;
+      border-radius: 8px;
+      margin: 20px 0;
+      display: none;
+      font-weight: 500;
+    }
+
+    .back-button {
+      background-color: #6c757d;
+      margin-top: 20px;
+    }
+
+    .back-button:hover {
+      background-color: #5a6268;
+    }
+
+    /* Score colors */
+    .good {
+      color: var(--success);
+    }
+    
+    .average {
+      color: var(--warning);
+    }
+    
+    .poor {
+      color: var(--danger);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px;
+      }
+      
+      nav {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .visualization {
+        height: 350px;
+      }
+      
+      .metric-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <i class="fas fa-comments"></i>
+      Interview Prep Hub
+    </div>
+    <nav>
+      <a href="index.html#technical-tips">Technical Tips</a>
+      <a href="index.html#hr-tips">HR Tips</a>
+      <a href="index.html#behavioral-tips">Behavioral Tips</a>
+      <a href="index.html#dashboard">Dashboard</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="section">
+      <h2><i class="fas fa-hands"></i> Comprehensive Gesture Analysis</h2>
+      <div class="progress-container">
+        <div id="analysisProgress" class="progress-bar"></div>
+      </div>
+      <button id="startBtn">Start Analysis (30 sec)</button>
+      <button id="stopBtn" disabled>Stop Analysis</button>
+      <div id="loadingIndicator" class="loading" style="display: none;">
+        <div class="spinner"></div>
+        <span>Initializing gesture analysis system...</span>
+      </div>
+
+      <div id="successMessage" class="success-message">
+        <strong>Analysis complete!</strong> Your gesture score has been saved to your performance dashboard.
+      </div>
+
+      <div id="realtimeFeedback" style="display: none; margin-top: 25px;">
+        <h3>Real-time Feedback</h3>
+        <div class="visualization" id="visualizationContainer">
+          <video id="cameraFeed" autoplay playsinline style="display: none;"></video>
+          <canvas id="analysisCanvas"></canvas>
+          <div class="face-overlay">
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+          </div>
+        </div>
+        <p id="liveFeedback" style="margin-top: 15px; font-size: 1.1rem;">Initializing gesture analysis...</p>
+        <div class="metric-container">
+          <div class="metric-card">
+            <h4>Eye Contact <span class="confidence-indicator" id="eyeContactLiveIndicator"></span></h4>
+            <div class="metric-value" id="eyeContactLiveValue">0%</div>
+          </div>
+          <div class="metric-card">
+            <h4>Hand Movements <span class="confidence-indicator" id="handMovementLiveIndicator"></span></h4>
+            <div class="metric-value" id="handMovementLiveValue">0</div>
+          </div>
+          <div class="metric-card">
+            <h4>Posture <span class="confidence-indicator" id="postureLiveIndicator"></span></h4>
+            <div class="metric-value" id="postureLiveValue">0%</div>
+          </div>
+          <div class="metric-card">
+            <h4>Expressions <span class="confidence-indicator" id="expressionLiveIndicator"></span></h4>
+            <div class="metric-value" id="expressionLiveValue">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="resultsSection" style="display: none;">
+        <h3>Detailed Analysis Results</h3>
+        <div class="metric-container">
+          <div class="metric-card">
+            <h4>Eye Contact <span class="confidence-indicator" id="eyeContactFinalIndicator"></span></h4>
+            <div class="metric-value" id="eyeContactFinalValue">0%</div>
+          </div>
+          <div class="metric-card">
+            <h4>Hand Movements <span class="confidence-indicator" id="handMovementFinalIndicator"></span></h4>
+            <div class="metric-value" id="handMovementFinalValue">0</div>
+          </div>
+          <div class="metric-card">
+            <h4>Posture <span class="confidence-indicator" id="postureFinalIndicator"></span></h4>
+            <div class="metric-value" id="postureFinalValue">0%</div>
+          </div>
+          <div class="metric-card">
+            <h4>Facial Expressions <span class="confidence-indicator" id="expressionFinalIndicator"></span></h4>
+            <div class="metric-value" id="expressionFinalValue">0%</div>
+          </div>
+        </div>
+        <div class="tips" id="improvementTips"></div>
+      </div>
+      <button class="back-button" onclick="window.location.href='index.html'">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Analysis System Constants
+    const ANALYSIS_DURATION = 30000; // 30 seconds
+    const UPDATE_INTERVAL = 500; // Update every 500ms
+    const HAND_MOVEMENT_COOLDOWN = 1000; // 1 second between hand movements
+
+    // Analysis State
+    let analysisInterval;
+    let analysisStartTime;
+    let animationFrame;
+    let canvas, ctx;
+    let videoElement;
+    let stream = null;
+
+    // Analysis Data
+    const analysisData = {
+      eyeContact: { good: 0, total: 0, timeline: [] },
+      handMovements: { count: 0, timeline: [] },
+      posture: { good: 0, total: 0, timeline: [] },
+      expressions: { positive: 0, total: 0, timeline: [] }
+    };
+
+    // DOM Elements
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const realtimeFeedback = document.getElementById('realtimeFeedback');
+    const resultsSection = document.getElementById('resultsSection');
+    const progressBar = document.getElementById('analysisProgress');
+    const liveFeedback = document.getElementById('liveFeedback');
+    const successMessage = document.getElementById('successMessage');
+
+    // Initialize the system
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set up canvas and video
+      canvas = document.getElementById('analysisCanvas');
+      ctx = canvas.getContext('2d');
+      videoElement = document.getElementById('cameraFeed');
+
+      // Set canvas size to match container
+      const container = document.getElementById('visualizationContainer');
+      if (container) {
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+      }
+
+      // Event listeners
+      startBtn.addEventListener('click', startAnalysis);
+      stopBtn.addEventListener('click', stopAnalysis);
+    });
+
+    // Start the analysis
+    async function startAnalysis() {
+      // Reset state
+      resetAnalysisData();
+      updateUIForStart();
+
+      // Show loading indicator
+      loadingIndicator.style.display = 'flex';
+
+      // Try to start camera
+      const cameraStarted = await startCamera();
+
+      // Simulate model loading (in a real app, this would be actual model loading)
+      setTimeout(() => {
+        loadingIndicator.style.display = 'none';
+        realtimeFeedback.style.display = 'block';
+
+        // Start analysis timer
+        analysisStartTime = Date.now();
+        updateProgressBar(ANALYSIS_DURATION);
+
+        // Start analysis loop
+        analysisInterval = setInterval(analyzeGestures, UPDATE_INTERVAL);
+        
+        // Set canvas size
+        const container = document.getElementById('visualizationContainer');
+        canvas.width = container.offsetWidth;
+        canvas.height = container.offsetHeight;
+
+        // Start visualization animation
+        animateVisualization();
+      }, 1500);
+    }
+
+    // Stop the analysis
+    function stopAnalysis() {
+      clearInterval(analysisInterval);
+      cancelAnimationFrame(animationFrame);
+      stopCamera();
+
+      // Update UI
+      stopBtn.disabled = true;
+      startBtn.disabled = false;
+      progressBar.style.width = '0%';
+
+      // Calculate and display final results
+      calculateFinalScores();
+      resultsSection.style.display = 'block';
+      
+      // Show success message
+      successMessage.style.display = 'block';
+    }
+
+    // Start camera
+    async function startCamera() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 800 },
+            height: { ideal: 600 },
+            facingMode: 'user'
+          },
+          audio: false
+        });
+        videoElement.srcObject = stream;
+        videoElement.style.display = 'block';
+        return true;
+      } catch (err) {
+        console.error('Error accessing camera:', err);
+        showCameraError();
+        return false;
+      }
+    }
+
+    // Stop camera
+    function stopCamera() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        videoElement.srcObject = null;
+        videoElement.style.display = 'none';
+      }
+    }
+
+    // Show camera error
+    function showCameraError() {
+      const alertDiv = document.createElement('div');
+      alertDiv.className = 'alert';
+      alertDiv.textContent = 'Could not access camera. Using simulated data instead.';
+      document.querySelector('.section').prepend(alertDiv);
+    }
+
+    // Reset analysis data
+    function resetAnalysisData() {
+      analysisData.eyeContact = { good: 0, total: 0, timeline: [] };
+      analysisData.handMovements = { count: 0, timeline: [] };
+      analysisData.posture = { good: 0, total: 0, timeline: [] };
+      analysisData.expressions = { positive: 0, total: 0, timeline: [] };
+    }
+
+    // Update UI for analysis start
+    function updateUIForStart() {
+      startBtn.disabled = true;
+      stopBtn.disabled = false;
+      realtimeFeedback.style.display = 'none';
+      resultsSection.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      // Reset live values
+      document.getElementById('eyeContactLiveValue').textContent = '0%';
+      document.getElementById('handMovementLiveValue').textContent = '0';
+      document.getElementById('postureLiveValue').textContent = '0%';
+      document.getElementById('expressionLiveValue').textContent = '0%';
+
+      // Reset indicators
+      updateIndicator('eyeContactLiveIndicator', 0);
+      updateIndicator('handMovementLiveIndicator', 0);
+      updateIndicator('postureLiveIndicator', 0);
+      updateIndicator('expressionLiveIndicator', 0);
+    }
+
+    // Update progress bar
+    function updateProgressBar(duration) {
+      const startTime = Date.now();
+      const endTime = startTime + duration;
+
+      function update() {
+        const now = Date.now();
+        const elapsed = now - startTime;
+        const progress = Math.min((elapsed / duration) * 100, 100);
+        progressBar.style.width = `${progress}%`;
+
+        if (now < endTime) {
+          requestAnimationFrame(update);
+        } else {
+          stopAnalysis();
+        }
+      }
+
+      update();
+    }
+
+    // Main analysis function
+    function analyzeGestures() {
+      const elapsedTime = Date.now() - analysisStartTime;
+
+      // Simulate face detection (90% chance)
+      const faceDetected = Math.random() > 0.1;
+
+      if (faceDetected) {
+        // Analyze eye contact (60-90% chance of good eye contact)
+        const eyeContactGood = Math.random() > 0.3 ? 1 : 0;
+        analysisData.eyeContact.total++;
+        analysisData.eyeContact.good += eyeContactGood;
+        analysisData.eyeContact.timeline.push({
+          time: elapsedTime,
+          value: eyeContactGood
+        });
+
+        // Analyze posture (50-85% chance of good posture)
+        const postureGood = Math.random() > 0.4 ? 1 : 0;
+        analysisData.posture.total++;
+        analysisData.posture.good += postureGood;
+        analysisData.posture.timeline.push({
+          time: elapsedTime,
+          value: postureGood
+        });
+
+        // Analyze expressions (40-80% chance of positive expression)
+        const expressionPositive = Math.random() > 0.5 ? 1 : 0;
+        analysisData.expressions.total++;
+        analysisData.expressions.positive += expressionPositive;
+        analysisData.expressions.timeline.push({
+          time: elapsedTime,
+          value: expressionPositive
+        });
+
+        // Analyze hand movements (occasional with cooldown)
+        const lastMovementTime = analysisData.handMovements.timeline.length > 0
+          ? analysisData.handMovements.timeline[analysisData.handMovements.timeline.length - 1].time
+          : 0;
+
+        if (Math.random() > 0.8 && (elapsedTime - lastMovementTime) > HAND_MOVEMENT_COOLDOWN) {
+          analysisData.handMovements.count++;
+          analysisData.handMovements.timeline.push({
+            time: elapsedTime,
+            value: 1
+          });
+        }
+      } else {
+        // No face detected - count as negative for metrics
+        analysisData.eyeContact.total++;
+        analysisData.eyeContact.timeline.push({ time: elapsedTime, value: 0 });
+
+        analysisData.posture.total++;
+        analysisData.posture.timeline.push({ time: elapsedTime, value: 0 });
+
+        analysisData.expressions.total++;
+        analysisData.expressions.timeline.push({ time: elapsedTime, value: 0 });
+      }
+
+      // Update live feedback
+      updateLiveFeedback();
+    }
+
+    // Update live feedback display
+    function updateLiveFeedback() {
+      // Calculate current metrics
+      const eyeContactPercent = analysisData.eyeContact.total > 0
+        ? Math.round((analysisData.eyeContact.good / analysisData.eyeContact.total) * 100)
+        : 0;
+
+      const handMovementScore = calculateHandMovementScore(analysisData.handMovements.count);
+
+      const posturePercent = analysisData.posture.total > 0
+        ? Math.round((analysisData.posture.good / analysisData.posture.total) * 100)
+        : 0;
+
+      const expressionPercent = analysisData.expressions.total > 0
+        ? Math.round((analysisData.expressions.positive / analysisData.expressions.total) * 100)
+        : 0;
+
+      // Update displayed values
+      document.getElementById('eyeContactLiveValue').textContent = `${eyeContactPercent}%`;
+      document.getElementById('handMovementLiveValue').textContent = analysisData.handMovements.count;
+      document.getElementById('postureLiveValue').textContent = `${posturePercent}%`;
+      document.getElementById('expressionLiveValue').textContent = `${expressionPercent}%`;
+
+      // Update score colors
+      updateScoreColor('eyeContactLiveValue', eyeContactPercent);
+      updateScoreColor('handMovementLiveValue', handMovementScore);
+      updateScoreColor('postureLiveValue', posturePercent);
+      updateScoreColor('expressionLiveValue', expressionPercent);
+
+      // Update indicators
+      updateIndicator('eyeContactLiveIndicator', eyeContactPercent);
+      updateIndicator('handMovementLiveIndicator', handMovementScore);
+      updateIndicator('postureLiveIndicator', posturePercent);
+      updateIndicator('expressionLiveIndicator', expressionPercent);
+    }
+
+    // Update score color
+    function updateScoreColor(elementId, value) {
+      const element = document.getElementById(elementId);
+      if (value >= 80) {
+        element.className = 'metric-value good';
+      } else if (value >= 50) {
+        element.className = 'metric-value average';
+      } else {
+        element.className = 'metric-value poor';
+      }
+    }
+
+    // Update indicator color
+    function updateIndicator(elementId, value) {
+      const indicator = document.getElementById(elementId);
+      if (value >= 80) {
+        indicator.style.backgroundColor = '#4cc9f0'; // success color
+      } else if (value >= 50) {
+        indicator.style.backgroundColor = '#f8961e'; // warning color
+      } else {
+        indicator.style.backgroundColor = '#f94144'; // danger color
+      }
+    }
+
+    // Calculate hand movement score
+    function calculateHandMovementScore(count) {
+      return Math.min(count * 10, 100);
+    }
+
+    // Animation loop for visualization
+    function animateVisualization() {
+      animationFrame = requestAnimationFrame(animateVisualization);
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw camera feed if available
+      if (videoElement.readyState === videoElement.HAVE_ENOUGH_DATA) {
+        ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+      }
+
+      // Draw analysis visualization
+      const progress = analysisData.eyeContact.total > 0
+        ? analysisData.eyeContact.good / analysisData.eyeContact.total
+        : 0;
+      
+      // Draw face overlay
+      ctx.beginPath();
+      ctx.ellipse(canvas.width/2, canvas.height/2, 100, 120, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(67, 97, 238, ${0.3 + progress * 0.7})`;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Draw eye contact visualization
+      const eyeContactPercent = analysisData.eyeContact.total > 0
+        ? analysisData.eyeContact.good / analysisData.eyeContact.total
+        : 0;
+      
+      // Left eye
+      ctx.beginPath();
+      ctx.arc(canvas.width/2 - 50, canvas.height/2 - 30, 15 * eyeContactPercent, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(67, 97, 238, ${0.5 + eyeContactPercent * 0.5})`;
+      ctx.fill();
+
+      // Right eye
+      ctx.beginPath();
+      ctx.arc(canvas.width/2 + 50, canvas.height/2 - 30, 15 * eyeContactPercent, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(67, 97, 238, ${0.5 + eyeContactPercent * 0.5})`;
+      ctx.fill();
+    }
+
+    // Calculate final scores and show results
+    function calculateFinalScores() {
+      const eyeContactScore = analysisData.eyeContact.total > 0 
+        ? Math.round((analysisData.eyeContact.good / analysisData.eyeContact.total) * 100)
+        : 0;
+      const postureScore = analysisData.posture.total > 0
+        ? Math.round((analysisData.posture.good / analysisData.posture.total) * 100)
+        : 0;
+      const expressionScore = analysisData.expressions.total > 0
+        ? Math.round((analysisData.expressions.positive / analysisData.expressions.total) * 100)
+        : 0;
+      const handMovementScore = calculateHandMovementScore(analysisData.handMovements.count);
+
+      // Calculate overall gesture score (weighted average)
+      const overallGestureScore = Math.round(
+        (eyeContactScore * 0.3) + 
+        (postureScore * 0.3) + 
+        (expressionScore * 0.2) + 
+        (handMovementScore * 0.2)
+      );
+
+      // Update final results display
+      document.getElementById('eyeContactFinalValue').textContent = `${eyeContactScore}%`;
+      document.getElementById('postureFinalValue').textContent = `${postureScore}%`;
+      document.getElementById('expressionFinalValue').textContent = `${expressionScore}%`;
+      document.getElementById('handMovementFinalValue').textContent = handMovementScore;
+
+      // Update score colors for final results
+      updateScoreColor('eyeContactFinalValue', eyeContactScore);
+      updateScoreColor('postureFinalValue', postureScore);
+      updateScoreColor('expressionFinalValue', expressionScore);
+      updateScoreColor('handMovementFinalValue', handMovementScore);
+
+      // Update indicators for final results
+      updateIndicator('eyeContactFinalIndicator', eyeContactScore);
+      updateIndicator('postureFinalIndicator', postureScore);
+      updateIndicator('expressionFinalIndicator', expressionScore);
+      updateIndicator('handMovementFinalIndicator', handMovementScore);
+
+      // Generate improvement tips
+      generateImprovementTips(eyeContactScore, postureScore, expressionScore, handMovementScore);
+
+      // Save the score to sessionStorage for the main page
+      saveGestureScore(overallGestureScore);
+    }
+
+    // Generate personalized improvement tips
+    function generateImprovementTips(eyeContact, posture, expression, handMovements) {
+      const tipsContainer = document.getElementById('improvementTips');
+      let tipsHTML = '<h3>Personalized Improvement Tips</h3><ul>';
+
+      if (eyeContact < 70) {
+        tipsHTML += '<li><strong>Eye Contact:</strong> Practice maintaining eye contact with the camera. Try placing a small sticker near your webcam to remind yourself to look at it.</li>';
+      }
+
+      if (posture < 70) {
+        tipsHTML += '<li><strong>Posture:</strong> Sit up straight with your shoulders back. Imagine a string pulling you up from the top of your head.</li>';
+      }
+
+      if (expression < 70) {
+        tipsHTML += '<li><strong>Facial Expressions:</strong> Smile naturally and nod occasionally to show engagement. Practice in front of a mirror.</li>';
+      }
+
+      if (handMovements < 50) {
+        tipsHTML += '<li><strong>Hand Movements:</strong> Use natural hand gestures to emphasize points, but avoid excessive movement that might be distracting.</li>';
+      } else if (handMovements > 80) {
+        tipsHTML += '<li><strong>Hand Movements:</strong> Your gestures are active, which is good, but make sure they\'re purposeful and not distracting.</li>';
+      }
+
+      if (eyeContact >= 80 && posture >= 80 && expression >= 80) {
+        tipsHTML += '<li>Your body language is strong! Focus on maintaining this level of engagement throughout your interviews.</li>';
+      }
+
+      tipsHTML += '</ul>';
+      tipsContainer.innerHTML = tipsHTML;
+    }
+
+    // Save gesture score to sessionStorage
+    function saveGestureScore(score) {
+      try {
+        // Get existing scores or create new object if none exists
+        const currentScores = JSON.parse(sessionStorage.getItem('interviewScores')) || {};
+        
+        // Update the gestures score and details
+        currentScores.gestures = score;
+        currentScores.gestureDetails = {
+          eyeContact: analysisData.eyeContact.total > 0 
+            ? Math.round((analysisData.eyeContact.good / analysisData.eyeContact.total) * 100)
+            : 0,
+          posture: analysisData.posture.total > 0
+            ? Math.round((analysisData.posture.good / analysisData.posture.total) * 100)
+            : 0,
+          handGestures: calculateHandMovementScore(analysisData.handMovements.count),
+          facialExpressions: analysisData.expressions.total > 0
+            ? Math.round((analysisData.expressions.positive / analysisData.expressions.total) * 100)
+            : 0
+        };
+        
+        // Save back to sessionStorage
+        sessionStorage.setItem('interviewScores', JSON.stringify(currentScores));
+        
+        console.log('Gesture score saved:', score);
+      } catch (error) {
+        console.error('Error saving gesture score:', error);
+      }
+    }
+  </script>
+</body>
+</html>

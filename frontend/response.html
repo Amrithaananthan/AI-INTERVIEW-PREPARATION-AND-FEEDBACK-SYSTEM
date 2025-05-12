@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Response Quality Analysis | Interview Prep Hub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Reuse the same styles from main page with some additions */
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #f72585;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gradient: linear-gradient(135deg, #4361ee, #3a0ca3);
+      --success: #4cc9f0;
+      --warning: #f8961e;
+      --danger: #f94144;
+    }
+    
+    body {
+      font-family: 'Segoe UI', 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafc;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* Header styles */
+    header {
+      background: var(--gradient);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    header .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo i {
+      color: var(--accent);
+    }
+
+    .back-button {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Main content styles */
+    .container {
+      padding: 50px 5%;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      padding: 30px;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .question-container {
+      margin-bottom: 30px;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--secondary);
+    }
+
+    textarea {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      min-height: 150px;
+      resize: vertical;
+      transition: border 0.3s ease;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+    }
+
+    .star-method {
+      background: #f0f4ff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+
+    .star-method h4 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    .star-method ul {
+      padding-left: 20px;
+    }
+
+    .star-method li {
+      margin-bottom: 8px;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 15px;
+    }
+
+    button:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .results-section {
+      display: none;
+      margin-top: 30px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .score-display {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 20px 0;
+      padding: 15px;
+      text-align: center;
+      border-radius: 8px;
+      background: rgba(67, 97, 238, 0.1);
+    }
+
+    .feedback-points {
+      padding-left: 20px;
+    }
+
+    .feedback-points li {
+      margin-bottom: 10px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 15px;
+      }
+      
+      .section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-comments"></i>
+      Interview Prep Hub
+    </div>
+    <a href="index.html" class="back-button">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="section">
+      <h2><i class="fas fa-lightbulb"></i> Response Quality Analysis</h2>
+      <p>Practice answering common interview questions using the STAR method. Write your responses below and get instant feedback on how to improve.</p>
+      
+      <div class="question-container">
+        <div class="question">1. Tell me about a time you faced a difficult challenge at work and how you handled it.</div>
+        <textarea id="answer1" placeholder="Write your response using the STAR method..."></textarea>
+        <div class="star-method">
+          <h4>STAR Method Guide:</h4>
+          <ul>
+            <li><strong>Situation:</strong> Set the context for your story</li>
+            <li><strong>Task:</strong> Describe your responsibility in that situation</li>
+            <li><strong>Action:</strong> Explain what steps you took to address it</li>
+            <li><strong>Result:</strong> Share the outcomes of your actions</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="question-container">
+        <div class="question">2. Describe a situation where you had to work with a difficult team member.</div>
+        <textarea id="answer2" placeholder="Write your response using the STAR method..."></textarea>
+      </div>
+      
+      <div class="question-container">
+        <div class="question">3. Give an example of a time you made a mistake and how you handled it.</div>
+        <textarea id="answer3" placeholder="Write your response using the STAR method..."></textarea>
+      </div>
+      
+      <button id="analyze-btn" onclick="analyzeResponses()">
+        <i class="fas fa-chart-bar"></i> Analyze Responses
+      </button>
+      
+      <div class="results-section" id="results-section">
+        <h3><i class="fas fa-clipboard-check"></i> Your Response Analysis</h3>
+        <div class="score-display" id="score-display">Your Score: - / 100</div>
+        
+        <h4>Strengths:</h4>
+        <ul class="feedback-points" id="strengths-list">
+          <!-- Will be populated by JavaScript -->
+        </ul>
+        
+        <h4>Areas for Improvement:</h4>
+        <ul class="feedback-points" id="improvements-list">
+          <!-- Will be populated by JavaScript -->
+        </ul>
+        
+        <button onclick="saveResults()">
+          <i class="fas fa-save"></i> Save Results to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function analyzeResponses() {
+      const answer1 = document.getElementById('answer1').value.trim();
+      const answer2 = document.getElementById('answer2').value.trim();
+      const answer3 = document.getElementById('answer3').value.trim();
+      
+      if (!answer1 || !answer2 || !answer3) {
+        alert('Please complete all three responses before analyzing.');
+        return;
+      }
+      
+      // Show loading state
+      const analyzeBtn = document.getElementById('analyze-btn');
+      analyzeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+      analyzeBtn.disabled = true;
+      
+      // Simulate analysis (in a real app, this would be more sophisticated)
+      setTimeout(() => {
+        // Calculate score (simple example - real analysis would be more complex)
+        let score = 50; // Base score
+        
+        // Check for STAR components in answers
+        const starComponents = ['situation', 'task', 'action', 'result'];
+        const answers = [answer1.toLowerCase(), answer2.toLowerCase(), answer3.toLowerCase()];
+        
+        let starCount = 0;
+        answers.forEach(answer => {
+          starComponents.forEach(component => {
+            if (answer.includes(component)) starCount++;
+          });
+        });
+        
+        // Add points for STAR components found
+        score += Math.min(starCount * 5, 30);
+        
+        // Add points for answer length (very simple metric)
+        const totalLength = answer1.length + answer2.length + answer3.length;
+        if (totalLength > 1500) score += 10;
+        else if (totalLength > 1000) score += 5;
+        
+        // Cap score at 100
+        score = Math.min(score, 100);
+        
+        // Generate feedback
+        const strengths = [];
+        const improvements = [];
+        
+        if (starCount >= 6) {
+          strengths.push("Good use of the STAR method in your responses");
+        } else {
+          improvements.push("Try to more explicitly use the STAR method in all responses");
+        }
+        
+        if (totalLength > 1200) {
+          strengths.push("Your answers have good detail and depth");
+        } else if (totalLength < 800) {
+          improvements.push("Your answers could use more detail - aim for 200-300 words per question");
+        }
+        
+        // Check for action-oriented language
+        const actionWords = ['led', 'created', 'implemented', 'developed', 'resolved', 'improved'];
+        let actionWordCount = 0;
+        answers.forEach(answer => {
+          actionWords.forEach(word => {
+            if (answer.includes(word)) actionWordCount++;
+          });
+        });
+        
+        if (actionWordCount >= 5) {
+          strengths.push("Strong use of action-oriented language");
+        } else {
+          improvements.push("Include more action verbs (led, created, implemented, etc.)");
+        }
+        
+        // Display results
+        document.getElementById('score-display').textContent = `Your Score: ${score} / 100`;
+        document.getElementById('score-display').className = `score-display ${
+          score >= 80 ? 'score-excellent' : 
+          score >= 60 ? 'score-good' : 
+          score >= 40 ? 'score-fair' : 'score-poor'
+        }`;
+        
+        const strengthsList = document.getElementById('strengths-list');
+        strengthsList.innerHTML = strengths.map(s => `<li>${s}</li>`).join('') || '<li>No specific strengths identified yet</li>';
+        
+        const improvementsList = document.getElementById('improvements-list');
+        improvementsList.innerHTML = improvements.map(i => `<li>${i}</li>`).join('') || '<li>Good job! Keep practicing to maintain your skills</li>';
+        
+        document.getElementById('results-section').style.display = 'block';
+        
+        // Reset button
+        analyzeBtn.innerHTML = '<i class="fas fa-chart-bar"></i> Analyze Responses';
+        analyzeBtn.disabled = false;
+        
+        // Store score for saving
+        sessionStorage.setItem('responseScore', score);
+      }, 2000);
+    }
+    
+    function saveResults() {
+      const score = sessionStorage.getItem('responseScore');
+      if (!score) {
+        alert('No results to save. Please analyze your responses first.');
+        return;
+      }
+      
+      // Get existing scores or create new object
+      const scores = JSON.parse(sessionStorage.getItem('interviewScores')) || {};
+      scores.response = parseInt(score);
+      
+      // Save to session storage
+      sessionStorage.setItem('interviewScores', JSON.stringify(scores));
+      
+      alert('Your results have been saved to your dashboard!');
+      
+      // Optional: automatically redirect back to main page
+      window.location.href = 'index.html';
+    }
+    
+    // Add score color classes to style tag
+    const style = document.createElement('style');
+    style.textContent = `
+      .score-excellent { color: var(--success); }
+      .score-good { color: var(--primary); }
+      .score-fair { color: var(--warning); }
+      .score-poor { color: var(--danger); }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>

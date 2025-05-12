@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -24,7 +25,7 @@ function analyzeGesture(data) {
   return `Gesture confidence level: ${data.confidence || 0.9}. Maintain eye contact.`;
 }
 
-// Routes
+// Routes for your analysis
 app.post('/analyze/text', (req, res) => {
   const { answer } = req.body;
   const feedback = analyzeText(answer);
@@ -41,6 +42,19 @@ app.post('/analyze/gesture', (req, res) => {
   const { gestureData } = req.body;
   const feedback = analyzeGesture(gestureData);
   res.json({ feedback });
+});
+
+// Routes to serve HTML files
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/index.html'));
+});
+
+app.get('/gesture', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/gesture.html'));
+});
+
+app.get('/speech', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/speech.html'));
 });
 
 // Start server

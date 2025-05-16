@@ -213,7 +213,7 @@
       <i class="fas fa-comments"></i>
       Interview Prep Hub
     </div>
-    <a href="index.html" class="back-button">
+    <a href="index.html#dashboard" class="back-button">
       <i class="fas fa-arrow-left"></i> Back to Dashboard
     </a>
   </header>
@@ -267,6 +267,7 @@
         </ul>
         
         <button onclick="saveResults()">
+          
           <i class="fas fa-save"></i> Save Results to Dashboard
         </button>
       </div>
@@ -389,7 +390,7 @@
       alert('Your results have been saved to your dashboard!');
       
       // Optional: automatically redirect back to main page
-      window.location.href = 'index.html';
+      window.location.href = 'index.html#dashboard';
     }
     
     // Add score color classes to style tag

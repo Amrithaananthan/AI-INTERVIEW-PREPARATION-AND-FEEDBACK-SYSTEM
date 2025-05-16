@@ -1275,14 +1275,64 @@
     }
 
     function resetDemo() {
-      // Clear all scores
-      Object.keys(userScores).forEach(key => {
-        userScores[key] = null;
-      });
-      sessionStorage.removeItem('interviewScores');
-      updateDashboard();
-      alert('All scores have been reset');
-    }
+  // Clear all scores
+  Object.keys(userScores).forEach(key => {
+    userScores[key] = null;
+  });
+  sessionStorage.removeItem('interviewScores');
+  
+  // Reset all visual elements
+  document.getElementById('radial-score').textContent = '0';
+  document.getElementById('overall-score-value').textContent = '-';
+  document.getElementById('speech-score-value').textContent = '-';
+  document.getElementById('gesture-score-value').textContent = '-';
+  
+  // Reset progress bars
+  document.querySelector('#radial-progress .progress-bar').style.background = 'conic-gradient(var(--primary) 0%, var(--primary) 0%, #eee 0%)';
+  document.getElementById('speech-progress').style.width = '0%';
+  document.getElementById('gesture-progress').style.width = '0%';
+  document.getElementById('response-progress').style.width = '0%';
+  
+  // Reset radial progress large
+  document.getElementById('speech-radial').style.background = 'conic-gradient(var(--primary) 0%, var(--primary) 0%, #eee 0%)';
+  document.getElementById('gesture-radial').style.background = 'conic-gradient(var(--primary) 0%, var(--primary) 0%, #eee 0%)';
+  document.getElementById('overall-radial').style.background = 'conic-gradient(var(--primary) 0%, var(--primary) 0%, #eee 0%)';
+  
+  // Reset score displays
+  document.getElementById('speech-score').textContent = '- / 100';
+  document.getElementById('gesture-score').textContent = '- / 100';
+  document.getElementById('response-score').textContent = '- / 100';
+  
+  // Reset speech details
+  document.getElementById('clarity-score').textContent = '-';
+  document.getElementById('pace-score').textContent = '-';
+  document.getElementById('confidence-score').textContent = '-';
+  document.getElementById('fluency-score').textContent = '-';
+  
+  // Reset gesture details
+  document.getElementById('eye-contact-value').textContent = '-';
+  document.getElementById('eye-contact-bar').style.width = '0%';
+  document.getElementById('posture-value').textContent = '-';
+  document.getElementById('posture-bar').style.width = '0%';
+  document.getElementById('gestures-value').textContent = '-';
+  document.getElementById('gestures-bar').style.width = '0%';
+  document.getElementById('expressions-value').textContent = '-';
+  document.getElementById('expressions-bar').style.width = '0%';
+  
+  // Reset feedback content
+  document.getElementById('feedback-content').querySelector('p').textContent = 'Complete your assessments to get personalized feedback';
+  document.getElementById('feedback-list').innerHTML = `
+    <li>Complete your speech and gesture analysis to get personalized feedback</li>
+    <li>Practice answering common interview questions using the STAR method</li>
+    <li>Record yourself to review your body language and speech patterns</li>
+  `;
+  
+  // Remove score color classes
+  document.getElementById('radial-score').className = 'progress-text';
+  document.getElementById('overall-score-value').className = 'radial-inner';
+  
+  alert('All scores have been reset');
+}
   </script>
 </body>
 </html>
